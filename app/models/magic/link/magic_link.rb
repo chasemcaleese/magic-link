@@ -6,6 +6,7 @@ module Magic
 
       def send_login_instructions
         token = set_sign_in_token
+        puts "token is here: #{token}"
         send_magic_link_email(token) if token
         token
       end
@@ -17,7 +18,7 @@ module Magic
         end
 
         def send_magic_link_email(token)
-          MagicLinkMailer.send_magic_link(email, token).deliver_later
+          MagicLinkMailer.send_magic_link(email, token).deliver_now
         end
 
         def set_sign_in_token(force: false)
