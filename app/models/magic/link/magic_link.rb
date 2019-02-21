@@ -6,7 +6,6 @@ module Magic
 
       def send_login_instructions
         token = set_sign_in_token
-        puts "token is here: #{token}"
         send_magic_link_email(token) if token
         token
       end
