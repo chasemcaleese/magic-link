@@ -16,11 +16,13 @@ module Magic
           if token && send("#{Magic::Link.user_class.name.underscore}_signed_in?")
             #flash.now[:alert] = "You are already signed in"
           elsif user && token_matches?(user) && !token_expired?(user)
-            flash[:notice] = "You have signed in successfully"
+            #flash[:notice] = "You have signed in successfully"
             user.update_columns(sign_in_token: nil, sign_in_token_sent_at: nil)
             sign_in user
             if route
               redirect_to "#{route}".to_sym
+            else
+              redirect_to admin_dashboard_url
             end
           elsif user && token_matches?(user) && token_expired?(user)
             flash[:alert] = "That link has expired, but we just sent you a new one."
