@@ -19,6 +19,7 @@ module Magic
             sign_in user
           elsif user && token_matches?(user) && token_expired?(user)
             flash[:alert] = "That link expired, but we just sent you a new one."
+            user.update_columns(sign_in_token: nil, sign_in_token_sent_at: nil)
             new_magic_link = MagicLink.new(email: email)
             new_magic_link.send_login_instructions
           elsif email && token
