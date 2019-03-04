@@ -12,11 +12,15 @@ module Magic
           user  = email && token && Magic::Link.user_class.find_by(email: email)
 
           if token && send("#{Magic::Link.user_class.name.underscore}_signed_in?")
-            flash.now[:alert] = "You are already signed in"
-          elsif user && token_matches?(user) && token_not_expired?(user)
+            #flash.now[:alert] = "You are already signed in"
+          elsif user && token_matches?(user) && !token_expired?(user)
             flash[:notice] = "You have signed in successfully"
             user.update_columns(sign_in_token: nil, sign_in_token_sent_at: nil)
             sign_in user
+          elsif user && token_matches?(user) && token_expired?(user)
+            flash[:alert] = "That link expired, but we just sent you a new one."
+            new_magic_link = MagicLink.new(email: email)
+            new_magic_link.send_login_instructions
           elsif email && token
             flash[:alert] = "Your sign in token is invalid"
             redirect_to main_app.root_path
@@ -30,8 +34,9 @@ module Magic
           )
         end
 
-        def token_not_expired?(user)
-          user.sign_in_token_sent_at >= Magic::Link.token_expiration_hours.hours.ago
+        def token_expired?(user)
+          true
+          #user.sign_in_token_sent_at <= Magic::Link.token_expiration_hours.hours.ago
         end
       end
     end
