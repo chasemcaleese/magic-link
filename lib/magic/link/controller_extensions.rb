@@ -14,13 +14,13 @@ module Magic
           user  = email && token && Magic::Link.user_class.find_by(email: email)
 
           if token && send("#{Magic::Link.user_class.name.underscore}_signed_in?")
-            redirect_to_path(route)
+            redirect_to_path(path)
             #flash.now[:alert] = "You are already signed in"
           elsif user && token_matches?(user) && !token_expired?(user)
             #flash[:notice] = "You have signed in successfully"
             user.update_columns(sign_in_token: nil, sign_in_token_sent_at: nil)
             sign_in user
-            redirect_to_path(route)
+            redirect_to_path(path)
           elsif user && token_matches?(user) && token_expired?(user)
             flash[:alert] = "That link has expired, but we just sent you a new one."
             user.update_columns(sign_in_token: nil, sign_in_token_sent_at: nil)
@@ -32,8 +32,8 @@ module Magic
           end
         end
 
-        def redirect_to_path(route)
-          if route
+        def redirect_to_path(path)
+          if path
             redirect_to "#{path}".to_sym
           else
             redirect_to admin_dashboard_url
