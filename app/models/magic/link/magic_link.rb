@@ -5,10 +5,14 @@ module Magic
       attr_accessor :email
       attr_accessor :path
 
-      def send_login_instructions
+      def send_login_instructions(send_email = true)
         token = set_sign_in_token
-        send_magic_link_email(token) if token
+        send_magic_link_email(token) if token && send_email
         token
+      end
+
+      def get_login_link
+
       end
 
       private
