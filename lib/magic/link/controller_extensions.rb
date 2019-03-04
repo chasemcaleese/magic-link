@@ -20,7 +20,7 @@ module Magic
             user.update_columns(sign_in_token: nil, sign_in_token_sent_at: nil)
             sign_in user
             if route
-              redirect_to "#{route}_path".to_sym
+              redirect_to "#{route}".to_sym
             end
           elsif user && token_matches?(user) && token_expired?(user)
             flash[:alert] = "That link has expired, but we just sent you a new one."
