@@ -51,8 +51,7 @@ module Magic
         end
 
         def token_expired?(user)
-          true
-          #user.sign_in_token_sent_at <= Magic::Link.token_expiration_hours.hours.ago
+          user.sign_in_token_sent_at <= Magic::Link.token_expiration_hours.hours.ago
         end
       end
     end
