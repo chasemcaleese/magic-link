@@ -23,7 +23,7 @@ module Magic
             sign_in user
             redirect_to_path(path, redirect_id)
           elsif user && token_matches?(user) && token_expired?(user)
-            flash[:alert] = "That link has expired, but we just sent you a new one."
+            flash[:alert] = "That link was expired, but we just sent you a new one. Please click that link to login."
             user.update_columns(sign_in_token: nil, sign_in_token_sent_at: nil)
             new_magic_link = MagicLink.new(email: email, path: path, redirect_id: redirect_id)
             new_magic_link.send_login_instructions
@@ -35,7 +35,7 @@ module Magic
 
         def redirect_to_path(path, redirect_id)
           if path && redirect_id
-            redirect_to send("#{path}".to_sym, redirect_id)
+            redirect_to send("#{path}_path".to_sym, redirect_id)
           elsif path
             redirect_to "#{path}".to_sym
           else
