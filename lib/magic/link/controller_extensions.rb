@@ -34,8 +34,10 @@ module Magic
         end
 
         def redirect_to_path(path, redirect_id)
-          if path
-            redirect_to "#{path}".to_sym, redirect_id
+          if path && redirect_id
+            redirect_to send("#{path}".to_sym, redirect_id)
+          elsif path
+            redirect_to "#{path}".to_sym
           else
             redirect_to admin_dashboard_url
           end
