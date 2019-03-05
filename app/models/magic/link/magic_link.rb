@@ -2,8 +2,8 @@ module Magic
   module Link
     class MagicLink
       include ActiveModel::Model
-      attr_accessor :email
-      attr_accessor :path
+      attr_accessor :email, :path, :redirect_id
+
 
       def send_login_instructions(send_email = true)
         token = set_sign_in_token
@@ -22,7 +22,7 @@ module Magic
         end
 
         def send_magic_link_email(token)
-          MagicLinkMailer.send_magic_link(email, token, path).deliver_now
+          MagicLinkMailer.send_magic_link(email, token, path, redirect_id).deliver_now
         end
 
         def set_sign_in_token(force: false)

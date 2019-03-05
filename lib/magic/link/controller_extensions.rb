@@ -25,7 +25,7 @@ module Magic
           elsif user && token_matches?(user) && token_expired?(user)
             flash[:alert] = "That link has expired, but we just sent you a new one."
             user.update_columns(sign_in_token: nil, sign_in_token_sent_at: nil)
-            new_magic_link = MagicLink.new(email: email, path: path)
+            new_magic_link = MagicLink.new(email: email, path: path, redirect_id: redirect_id)
             new_magic_link.send_login_instructions
           elsif email && token
             flash[:alert] = "Your sign in token is invalid"
@@ -51,7 +51,8 @@ module Magic
         end
 
         def token_expired?(user)
-          user.sign_in_token_sent_at <= Magic::Link.token_expiration_hours.hours.ago
+          true
+          #user.sign_in_token_sent_at <= Magic::Link.token_expiration_hours.hours.ago
         end
       end
     end
