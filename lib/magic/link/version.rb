@@ -1,5 +1,5 @@
 module Magic
   module Link
-    VERSION = '0.1.97'
+    VERSION = '0.1.98'
   end
 end

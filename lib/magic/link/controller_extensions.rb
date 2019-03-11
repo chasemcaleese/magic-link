@@ -28,8 +28,8 @@ module Magic
             new_magic_link = MagicLink.new(email: email, path: path, redirect_id: redirect_id)
             new_magic_link.send_login_instructions
           elsif email && token
-            flash[:alert] = "Your sign in token is invalid"
-            redirect_to main_app.root_path
+            flash[:alert] = "Please sign in to access that page"
+            redirect_to main_app.new_user_session_path
           end
         end
 
