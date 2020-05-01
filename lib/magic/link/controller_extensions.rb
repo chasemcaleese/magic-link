@@ -16,9 +16,7 @@ module Magic
 
           if token && send("#{Magic::Link.user_class.name.underscore}_signed_in?")
             redirect_to_path(path, redirect_id)
-            #flash.now[:alert] = "You are already signed in"
           elsif user && token_matches?(user) && !token_expired?(user)
-            #flash[:notice] = "You have signed in successfully"
             user.update_columns(sign_in_token: nil, sign_in_token_sent_at: nil)
             sign_in user
             redirect_to_path(path, redirect_id)

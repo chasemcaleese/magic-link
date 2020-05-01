@@ -7,5 +7,7 @@ class CreateMagicLinkTokens < ActiveRecord::Migration[6.0]
       t.boolean :reusable, :default => false
       t.timestamps
     end
+
+    add_index :magic_link_tokens, [:token, :resource_id], unique: true
   end
 end
