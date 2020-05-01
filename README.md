@@ -14,10 +14,13 @@ end
 
 Run `rails magic_link:install:migrations`
 
-
 Run `rails magic_link:move_to_multi`
 
 Or `Magic::Link::Utility.move_to_multi`
+
+reusable
+
+path/resource_id
 
 Remove old columns `sign_in_token` and `sign_in_token_sent_at`
 

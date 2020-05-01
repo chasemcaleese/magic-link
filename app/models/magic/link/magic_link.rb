@@ -1,10 +1,13 @@
 module Magic
   module Link
     class MagicLink
-      attr_accessor :email, :user, :path, :redirect_id
+      attr_accessor :email, :user, :path, :redirect_id, :reusable
 
-      def initialize(email:, path: nil, redirect_id: nil)
+      def initialize(email:, path: nil, redirect_id: nil, reusable: false)
         @email = email
+        @path = path 
+        @redirect_id = redirect_id
+        @reusable = reusable
         @user = Magic::Link.user_class.find_by(email: email.downcase)
       end 
 
@@ -20,8 +23,8 @@ module Magic
       private
 
         def generate_sign_in_token
-          raw, enc = Devise.token_generator.generate(Magic::Link.user_class, :sign_in_token)
-          Token.create(resource_id: user.id, token: enc, token_sent_at: Time.current)
+          raw, enc = Devise.token_generator.generate(Token, :token)
+          Token.create(resource_id: user.id, token: enc, token_sent_at: Time.current, reusable: reusable)
           raw
         end
     end
