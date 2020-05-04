@@ -25,6 +25,11 @@ path/resource_id
 Remove old columns `sign_in_token` and `sign_in_token_sent_at`
 
 
+resource_or_magic_link
+magic_link_to('joel', app.admin_dashboard_path(10), reusable: true, resource: User.last)
+magic_link_to(app.admin_dashboard_path(10), {class: 'help'}, resource: User.last) { 'joel' }
+
+
 mount the engine
 ```ruby
 mount Magic::Link::Engine, at: '/'
