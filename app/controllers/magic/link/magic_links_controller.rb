@@ -4,11 +4,11 @@ module Magic
       before_action :check_user, only: :new
 
       def new
-        @magic_link = MagicLink.new
+        raise "Incomplete Feature"
       end
 
       def create
-        @magic_link = MagicLink.new(permitted_params)
+        @magic_link = MagicLink.new(email: permitted_params[:email])
         @magic_link.send_login_instructions.deliver_now
         redirect_to main_app.root_path, notice: "Check your email for a sign in link!"
       end
