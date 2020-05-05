@@ -18,6 +18,14 @@ module Magic
         @token ||= generate_sign_in_token
       end
 
+      def to_param 
+        to_hash.to_param
+      end
+      
+      def to_hash 
+        {email: email, sign_in_token: get_login_token}
+      end 
+
       private
 
         def generate_sign_in_token

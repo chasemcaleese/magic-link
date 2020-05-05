@@ -1,6 +1,5 @@
 # Magic::Link
-Short description and motivation.
-
+Send users a clickable magic login link. 
 
 ## Installation
 Add this line to your application's Gemfile:
@@ -107,21 +106,25 @@ mg = Magic::Link::MagicLink.new(email: 'bob@bob.com')
 magic_link_to('Edit My Account', app.admin_edit_user(user), resource: mg) 
 ```
 
+You can also call `mg.to_hash` to use within existing link_to:
+
+```
+mg.to_hash
+#  {:email=>"bob@hi.com", :sign_in_token=>"gWd8ZPad49uDm6PExeUaBM"}
+```
+
+Or `mg.to_param` to get the query string representation:
+
+```
+mg.to_param
+# "email=bob%40hi.com&sign_in_token=gWd8ZPad49uDm6PExeUaBMM"  
+```
 
 ## 1.0.0 Dropped Features
 
 MagicLink no longer accepts options for `path` or `resource_id`. 
 
 You can use the new magic_link_to helper to construct URLs that go directly to the desired protected URL.
-
-
-
-resource_or_magic_link
-magic_link_to('joel', app.admin_dashboard_path(10), reusable: true, resource: User.last)
-magic_link_to(app.admin_dashboard_path(10), {class: 'help'}, resource: User.last) { 'joel' }
-
-
-
 
 
 
