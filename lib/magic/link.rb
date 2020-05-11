@@ -4,6 +4,7 @@ require "magic/link/railtie"
 
 module Magic
   module Link
+
     mattr_accessor :user_class
     @@user_class = "User"
 
@@ -22,5 +23,6 @@ module Magic
         @@user_class.constantize
       end
     end
+
   end
 end
