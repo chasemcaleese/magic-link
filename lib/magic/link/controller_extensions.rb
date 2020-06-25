@@ -17,8 +17,10 @@ module Magic
           token = Token.find_by(token: Devise.token_generator.digest(Token, :token, token_param))
 
           if send("#{Magic::Link.user_class.name.underscore}_signed_in?")
-            token.destroy unless token.nil? || token.reusable?
-          elsif magic_link_token_matches?(resource, token)
+            sign_out Magic::Link.user_class.name.underscore.to_sym
+          end 
+
+          if magic_link_token_matches?(resource, token)
             if !magic_link_token_expired?(token)
               token.destroy unless token.reusable?
               sign_in resource
