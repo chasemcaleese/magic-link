@@ -27,7 +27,7 @@ module Magic
             else 
               flash[:alert] = "That link was expired, but we just sent you a new one. Please click that link to login."
               new_magic_link = MagicLink.new(email: resource.email, reusable: token.reusable?)
-              new_magic_link.send_login_instructions(url: current_url, params: params).deliver_now
+              new_magic_link.send_login_instructions(url: request.fullpath, params: params).deliver_now
               token.destroy
             end   
           else
