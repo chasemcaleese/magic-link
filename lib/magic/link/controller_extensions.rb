@@ -23,6 +23,9 @@ module Magic
           if magic_link_token_matches?(resource, token)
             if !magic_link_token_expired?(token)
               token.destroy unless token.reusable?
+              if defined?(resource.confirmed?) && !resource.confirmed?
+                resource.confirm if defined?(resource.confirm)
+              end 
               sign_in resource
             else 
               flash[:alert] = "That link was expired, but we just sent you a new one. Please click that link to login."
