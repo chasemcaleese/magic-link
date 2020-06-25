@@ -1,7 +1,7 @@
-Hey there! Here is your sign in link (you can only use it once):
+Hey there! Here is your sign in link:
 
 <% if @url.present? %>
-  <%= url_to @url, **parms.merge(email: @email, sign_in_token: @token) %>
+  <%= link_to @url, @url %>
 <% else %>
   <%= main_app.root_url(email: @email, sign_in_token: @token) %>
 <% end %>
