@@ -1,5 +1,9 @@
-Hey there! Here is your sign in link (you can only use it once):
+Hey there! Here is your sign in link:
 
-<%= main_app.root_url(email: @email, sign_in_token: @token) %>
+<% if @url.present? %>
+  <%= link_to @url, @url %>
+<% else %>
+  <%= main_app.root_url(email: @email, sign_in_token: @token) %>
+<% end %>
 
 Thanks!

@@ -9,9 +9,9 @@ module Magic
         @user = Magic::Link.user_class.find_by(email: email.downcase)
       end 
 
-      def send_login_instructions
+      def send_login_instructions(url: nil)
         token = get_login_token
-        MagicLinkMailer.send_magic_link(email, token)
+        MagicLinkMailer.send_magic_link(email, token, url: url)
       end
 
       def get_login_token
